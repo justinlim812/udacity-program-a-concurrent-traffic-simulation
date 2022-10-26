@@ -91,12 +91,16 @@ void TrafficLight::cycleThroughPhases()
         // Toggle between red and green lights
         if(_currentPhase == TrafficLightPhase::red){
             _currentPhase = TrafficLightPhase::green;
-            // std::cout << "Traffic light #" << std::this_thread::get_id() << " is now green" << std::endl;
+            std::unique_lock<std::mutex> lightLock(_mutex);
+            std::cout << "Traffic light #" << std::this_thread::get_id() << " is now green" << std::endl;
+            lightLock.unlock();
         }
         // Light is green
         else{
             _currentPhase = TrafficLightPhase::red;
-            // std::cout << "Traffic light #" << std::this_thread::get_id() << " is now red" << std::endl;
+            std::unique_lock<std::mutex> lightLock(_mutex);
+            std::cout << "Traffic light #" << std::this_thread::get_id() << " is now red" << std::endl;
+            lightLock.unlock();
         }
 
         // Push each new traffic light phase into message queue
