@@ -26,7 +26,7 @@ void MessageQueue<T>::send(T &&msg)
     
     // std::cout << "Message: " << msg << "sent to queue" << std::endl;
     _queue.clear();
-    _queue.push_back(std::move(msg));
+    _queue.emplace_back(msg);
     _cond.notify_one();
 }
 
