@@ -25,6 +25,7 @@ void MessageQueue<T>::send(T &&msg)
     std::lock_guard<std::mutex> lock_guard(_mutex);
     
     // std::cout << "Message: " << msg << "sent to queue" << std::endl;
+    _queue.clear();
     _queue.push_back(std::move(msg));
     _cond.notify_one();
 }
